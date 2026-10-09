@@ -1,0 +1,39 @@
+name: Tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  unit-and-package:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install real dependencies
+        run: python -m pip install -e '.[dev]'
+      - name: Dependency health
+        run: python -m pip check
+      - name: Offline semantic tests with installed SDK/framework
+        run: python -m pytest -q
+      - name: Compile
+        run: python -m compileall -q src examples tests
+      - name: Build packages
+        run: python -m build
+      - name: Metadata check
+        shell: bash
+        run: python -m twine check dist/*
+      - name: Wheel import check
+        shell: bash
+        run: |
+          python -m pip install --force-reinstall --no-deps dist/*.whl
+          python -c 'from loopgrid_microsoft_agent import LoopGridMicrosoftAgent; print(LoopGridMicrosoftAgent.__name__)'
+      # Full real-Core E2E is a separate mandatory release gate in VALIDATION.md.

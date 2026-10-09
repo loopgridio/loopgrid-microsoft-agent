@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "loopgrid-microsoft-agent"
+version = "0.1.0"
+description = "Native decision evidence middleware for Microsoft Agent Framework and LoopGrid"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+authors = [{name = "LoopGrid"}]
+keywords = ["agent-framework", "microsoft", "decision-evidence", "agent-governance", "loopgrid", "tamper-evident"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+]
+dependencies = ["agent-framework-core>=1.19.0,<2", "loopgrid>=0.8.0,<0.9"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-asyncio>=0.24", "build>=1.2", "twine>=6"]
+
+[project.urls]
+Homepage = "https://loopgrid.io/"
+Repository = "https://github.com/loopgridio/loopgrid-microsoft-agent"
+Issues = "https://github.com/loopgridio/loopgrid-microsoft-agent/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

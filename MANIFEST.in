@@ -1,0 +1,4 @@
+include README.md LICENSE NOTICE.md SECURITY.md INTEGRATION-CONTRACT.md CHANGELOG.md VALIDATION.md WINDOWS-VALIDATION.md
+recursive-include examples *.py
+recursive-include scripts *.py
+recursive-include tests *.py
